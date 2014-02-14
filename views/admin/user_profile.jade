@@ -1,0 +1,72 @@
+extends ./home
+
+block toolBody
+    h2 Edit User
+    p  #{user_to_edit.email}
+        br 
+        | #{user_to_edit._id}
+
+    form.form-horizontal(action='/admin/users/#{user_to_edit._id}', method='POST')
+        .form-group
+          label.col-xs-2.control-label(for='email') Email
+          .col-xs-10
+            input.form-control(type='email', name='email', id='email', value='#{user_to_edit.email}')
+        .form-group
+          label.col-xs-2.control-label(for='name') Name
+          .col-xs-10
+            input.form-control(type='text', name='name', id='name', value='#{user_to_edit.profile.name}')
+        .form-group
+          label.col-xs-2.control-label(for='nick') Nickname
+          .col-xs-10
+            input.form-control(type='text', name='nick', id='nick', value='#{user_to_edit.profile.nick}')
+            p.help-block This should be all one word, with no spaces.
+        .form-group
+          label.col-xs-2.control-label(for='name') Gender
+          .col-xs-10
+            label.radio
+              input(type='radio', checked=user_to_edit.profile.gender=='male', name='gender', value='male', data-toggle='radio')
+              | Male
+            label.radio
+              input(type='radio', checked=user_to_edit.profile.gender=='female', name='gender', value='female', data-toggle='radio')
+              | Female
+        .form-group
+          label.col-xs-2.control-label(for='location') Location
+          .col-xs-10
+            input.form-control(type='text', name='location', id='location', value='#{user_to_edit.profile.location}')
+        .form-group
+          label.col-xs-2.control-label(for='website') Website
+          .col-xs-10
+            input.form-control(type='text', name='website', id='website', value='#{user_to_edit.profile.website}')
+        .form-group
+          label.col-xs-2.control-label(for='roles') User Roles
+          .col-xs-10
+            for role in userRoles
+              label.checkbox #{role.title}
+                input(type="checkbox" name="roles[]" value="#{role.key}" checked=user_to_edit.roles.indexOf(role.key) !=-1)
+        .form-group
+          .col-xs-offset-2.col-xs-10
+            button.btn.btn.btn-primary(type='submit') Update Profile
+
+      .page-header
+        h3 Change Password
+
+      form.form-horizontal(action='/admin/users/password/#{user_to_edit._id}', method='POST')
+        .form-group
+          label.col-xs-3.control-label(for='password') New Password
+          .col-xs-9
+            input.form-control(type='password', name='password', id='password')
+        .form-group
+          label.col-xs-3.control-label(for='confirmPassword') Confirm Password
+          .col-xs-9
+            input.form-control(type='password', name='confirmPassword', id='confirmPassword')
+        .form-group
+          .col-xs-offset-3.col-xs-10
+            button.btn.btn.btn-primary(type='submit') Change Password
+
+      .page-header
+        h3 Delete Account
+
+      p You can delete this account, but keep in mind this action is irreversible.
+      form(action='/admin/users/delete', method='POST')
+        input(type="hidden" name="id" value="#{user_to_edit._id}")
+        button.btn.btn-danger(type='submit') Delete this account

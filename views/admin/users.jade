@@ -1,0 +1,28 @@
+extends ./home
+
+block toolBody
+    h2 User Admin Area
+        a(href="/admin/users/create").btn.btn-sm.btn-primary.pull-right Create User 
+            i.fa.fa-user
+    table.table.table-striped
+        thead
+            tr
+                th Nick
+                th Full Name
+                th Email
+                th Action
+        tbody
+            each user in users
+                - var is_admin = (user.roles.indexOf("admin") != -1)
+                tr
+                    td #{user.profile.nick}
+                    td #{user.profile.name}
+                    td 
+                        a(href="mailto:#{user.email}") #{user.email}
+                    td
+                        ul.list-inline
+                            li
+                                a(href="/admin/users/#{user._id}").btn.btn-primary.btn-xs: i.fa.fa-user                            
+                            if (is_admin)
+                                li
+                                    i.fa.fa-key

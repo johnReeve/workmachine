@@ -1,0 +1,17 @@
+extends ../layout
+
+block content
+    div#adminTool
+    
+        h1 Admin Area
+
+        div.row
+            div.col-xs-12.col-sm-2
+                div.row
+                    div.btn-group-vertical.col-xs-12
+                        a(href="/admin").btn.btn-default.btn-block Dash
+                        a(href="/admin/users").btn.btn-default.btn-block Users
+            div#toolBody.col-xs-12.col-sm-10
+                block toolBody
+                    h2 Admin Dashboard
+                    p Welcome to the admin tools.

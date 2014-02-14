@@ -1,0 +1,20 @@
+extends ./home
+
+block toolBody
+    h2 Create User
+    form.form-horizontal(action='/admin/users/create', method='POST')
+        .form-group
+          label.col-xs-2.control-label(for='email') Email
+          .col-xs-10
+            input.form-control(type='email', name='email', id='email', value='#{new_user.email}')
+        .form-group
+          label.col-xs-2.control-label(for='password') Password
+          .col-xs-10
+            input.form-control(type='password', name='password', id='password')
+        .form-group
+          label.col-xs-2.control-label(for='confirmPassword') Confirm Password
+          .col-xs-10
+            input.form-control(type='password', name='confirmPassword', id='confirmPassword')
+        .form-group
+          .col-xs-offset-2.col-xs-10
+            button.btn.btn.btn-primary(type='submit') Create User

@@ -1,0 +1,41 @@
+extends layout
+
+block content
+    h1 Chat
+    div.row
+        div#chatInformation.col-xs-12.col-sm-4.well
+            h4 Your Profile
+            | #{user.profile.nick}
+            if user.profile.location 
+                br
+                | #{user.profile.location}
+            br
+            //- | Session started:
+            //- span#sessionStart
+            ul.list-inline
+                li
+                    a(href="/account").btn.btn-xs.btn-primary
+                        i.fa.fa-user
+                        | Edit
+                li        
+                    a(href="/logout").btn.btn-xs.btn-danger
+                        i.fa.fa-times
+                        | Log Out
+
+            h4 Users Online
+            ul#usersOnline.list-unstyled
+        div#chatArea.col-xs-12.col-sm-8
+            table#messages.table.table-striped.table-condensed
+            hr  
+            form#chatControl            
+                .input-group                
+                    input.form-control(type='text', name='message', id='message', placeholder='Message...', autofocus=true)
+                    .input-group-btn
+                        button.btn.btn-default.submitButton Send
+
+block pagescripts
+    script(src='//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js')
+    script(src='/socket.io/socket.io.js?v=#{cacheBuster}')
+    script(src='/js/chat.js?v=#{cacheBuster}')
+    script
+        | var chat_url = "#{chat_url}";
