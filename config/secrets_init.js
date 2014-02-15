@@ -10,6 +10,7 @@
 module.exports = {
   db: 'localhost/devDatabase',
   chatPort: 8000,
+  sessionSecret: 'changeLikeADiaper',
 
   sendgrid: {
     user: 'user',

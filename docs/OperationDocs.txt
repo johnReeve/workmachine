@@ -49,8 +49,10 @@ II. Deploy
 
         >> git pull origin master
 
-        say a prayer
-        
+        update any additional config/secret.js settings
+
+        light a candle, spin the prayer wheels
+
         >> sudo service upstart-work-machine restart
 
     No Database migration at this time.

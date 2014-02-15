@@ -64,7 +64,7 @@ app.use(express.urlencoded());
 app.use(expressValidator());
 app.use(express.methodOverride());
 app.use(express.session({
-  secret: 'keCRuchetujUChuPu6uqesTunupRap7a',
+  secret: secrets.sessionSecret,
   store: sessionStore
 }));
 app.use(passport.initialize());
@@ -149,96 +149,14 @@ server.addListener('error', function(err) {
 });
 
 // Chat setup
-
 var sio = require('socket.io').listen(server);
-sio.set('log level', 1);
 sio.configure(function (){
-  sio.set('authorization', function (handshakeData, accept_callback) {
-
-    var User = require('./models/User');
-
-    handshakeData.cookie = cookie.parse(handshakeData.headers.cookie);    
-    handshakeData.sessionID = connect.utils.parseSignedCookie(handshakeData.cookie['connect.sid'], 'keCRuchetujUChuPu6uqesTunupRap7a');
-
-    sessionStore.get(handshakeData.sessionID, function (err, session) {
-      if (err || !session) {
-        accept_callback('No session found in db.', false);
-      } else {
-        // console.log("Gimme User:" + session.passport.user);
-        User.findById(session.passport.user, function(err, user) {
-          if (err || !user) {
-            accept_callback('User not found in db.', false);
-          } else {
-            handshakeData.user = {};
-            handshakeData.user.id = user._id;
-            handshakeData.user.nick = user.profile.nick;
-            handshakeData.user.name = user.profile.name;      
-            handshakeData.user.location = user.profile.location;
-            handshakeData.user.picture = user.profile.picture;
-            handshakeData.user.startTime = handshakeData.time;
-            accept_callback(null, true);
-          }
-        });
-      }
-    });
-
-  });
+  sio.set('log level', 1);
+  sio.set('authorization', chatController.handshake(sessionStore));
 });
+sio.sockets.on('connection', chatController.socketOnConnection(sio) );
 
 server.listen(app.get('port'), function(){
   console.log('✔ : Express server listening on port ' + app.get('port'));
 });
-
-sio.sockets.on('connection', function (socket) {
-
-  socket.join('main_chat');
-
-  //console.dir(sio.sockets);
-  // console.log("sockets.clients");
-  // console.dir(sio.sockets.clients());
-  // console.log("sockets.clients");
-  // console.dir(sio.sockets.clients('main_chat'));
-  // console.log("sockets.clients.manager.handshaken");
-  // console.dir(clients[0].manager.handshaken);
-  // console.log("List of nicks");
-  // console.dir(roomUsers);
-  // console.log("THIS socket");
-  // console.dir(socket);
-  sio.sockets.emit('chat_message', {message: socket.handshake.user.nick + " has entered chat.", user:"system"});
-
-  socket.emit('chat_message', {
-    message: 'Welcome to the chat machine, ' + socket.handshake.user.nick + '.',
-    user: "system" 
-  });
-  
-  socket.on('send', function (data) {
-    sio.sockets.emit('chat_message', { message: data.message, user: socket.handshake.user.nick });
-  });
-
-  socket.on('get_status', function (data) {
-    var clients = sio.sockets.clients('main_chat');
-    var roomUsers = getListOfUserNicks(clients[0]);
-    sio.sockets.emit('status_update', { userlist: roomUsers });
-  });
-
-  socket.on('disconnect', function () {
-    var clients = sio.sockets.clients('main_chat');
-    var roomUsers = getListOfUserNicks(clients[0]);
-    sio.sockets.emit('status_update', { userlist: roomUsers });
-    sio.sockets.emit('chat_message', {message: socket.handshake.user.nick + " has left chat.", user:"system"});
-  })
-
-
-});
-
-function getListOfUserNicks (client){
-  //get nicks
-  var _ = require('underscore');
-  var listOfUserNicks = [];
-  _.each(client.manager.handshaken, function (client){
-    listOfUserNicks.push(client.user.nick);
-  });
-  return listOfUserNicks;
-}
-
 
