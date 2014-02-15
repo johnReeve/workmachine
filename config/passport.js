@@ -215,10 +215,10 @@ exports.isAdmin = function(req, res, next) {
 };
 
 exports.canChat = function(req, res, next) {
-  if (_.contains(req.user.roles, 'chat')) {
-    next();
-  } else { 
-    req.flash('errors', { msg: 'You need permission.' });
-    res.redirect('/');
-  }
+    if (req.user && _.contains(req.user.roles, 'chat')) {
+      next();
+    } else { 
+      req.flash('errors', { msg: 'You need permission.' });
+      res.redirect('/');
+    }
 };
