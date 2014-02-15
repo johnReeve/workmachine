@@ -1,3 +1,12 @@
+/**
+  * INSTALLATION SPECIFIC SETTINGS
+  *
+  * DO NOT FORGET TO DOCUMENT CHANGES HERE IN THE secrets-sample.js!
+  *
+  *
+  */
+
+
 module.exports = {
   db: 'localhost/devDatabase',
   chatPort: 8000,

@@ -1,31 +1,53 @@
+-----=======------
+
+work-machine.js
+An application to help me do work (ostensibly).
 
 I. Install Docs
 
 II. Deploy Docs
 
+-----=======------
 
 I. Install
 
-    1. Configure the script files and save them as:
+    We're doing this all by hand, but someday... deploy scripts :D
 
-    /scripts/start.sh
-    /scripts/upstart-work-machine
+    Pull down the repo
 
-    2. setup the scripts to run in init.d
+    Create installation specific files:
 
-    sudo cp scripts/upstart-work-machine /etc/init.d/upstart-work-machine
-    sudo chmod a+x /etc/init.d/upstart-work-machine
+        /config/secrets.js
+        /docs/InstallationSpecificDocs.txt
 
-    3. After putting the script in place, you should update the system service definitions:
+    Setup nginx to serve the app on the right port
 
-    sudo update-rc.d my-application defaults
+    Damonize the app
 
-    4. Check your work:
+        1. Configure the script files and save them as:
 
-    service upstart-work-machine start
-    service upstart-work-machine status
-    service upstart-work-machine restart
-    service upstart-work-machine stop
+        /scripts/start.sh
+        /scripts/upstart-work-machine
+
+        2. setup the scripts to run in init.d
+
+        sudo cp scripts/upstart-work-machine /etc/init.d/upstart-work-machine
+        sudo chmod a+x /etc/init.d/upstart-work-machine
+
+        3. After putting the script in place, you should update the system service definitions:
+
+        sudo update-rc.d my-application defaults
+
+        4. Check your work:
+
+        service upstart-work-machine start
+        service upstart-work-machine status
+        service upstart-work-machine restart
+        service upstart-work-machine stop
+
+    Test to see if the site is up... then create a user on the front end, and give them admin status in the mongocli:
+
+        db.users.update({}, {$set: {roles: ['admin']}})
 
 II. Deploy
 
