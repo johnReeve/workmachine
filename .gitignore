@@ -21,3 +21,5 @@ node_modules
 Thumbs.db
 
 /config/secrets.js
+/scripts/start.sh
+/scripts/upstart-work-machine

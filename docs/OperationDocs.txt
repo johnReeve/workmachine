@@ -1,0 +1,40 @@
+
+I. Install Docs
+
+II. Deploy Docs
+
+
+I. Install
+
+    1. Configure the script files and save them as:
+
+    /scripts/start.sh
+    /scripts/upstart-work-machine
+
+    2. setup the scripts to run in init.d
+
+    sudo cp scripts/upstart-work-machine /etc/init.d/upstart-work-machine
+    sudo chmod a+x /etc/init.d/upstart-work-machine
+
+    3. After putting the script in place, you should update the system service definitions:
+
+    sudo update-rc.d my-application defaults
+
+    4. Check your work:
+
+    service upstart-work-machine start
+    service upstart-work-machine status
+    service upstart-work-machine restart
+    service upstart-work-machine stop
+
+II. Deploy
+
+    To update the software:
+
+        >> git pull origin master
+
+        say a prayer
+
+        >> service upstart-work-machine restart
+
+    No Database migration at this time.
