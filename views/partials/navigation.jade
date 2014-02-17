@@ -1,6 +1,8 @@
 - if(user)
   - var is_admin = (user.roles.indexOf("admin") != -1)
   - var can_chat = (user.roles.indexOf("chat") != -1)
+  - var can_paste = (user.roles.indexOf("paste") != -1)
+  - var can_pasteAdmin = (user.roles.indexOf("admin-paste") != -1)
 .navbar.navbar-default.navbar-fixed-top
   .container
     .navbar-header
@@ -14,16 +16,16 @@
       ul.nav.navbar-nav
         li(class=title=='Home'?'active':undefined)
           a(href='/') Home
-        li(class=title=='paste'?'active':undefined).dropdown
-          a(href='#' data-toggle="dropdown").dropdown-toggle Paste
-            b.caret
-          ul.dropdown-menu
-            li 
-              a(href="/paste/new") Create New
-            li
-              a(href="paste/user") View My Pastes
-            li
-              a(href="/paste/admin") Admin Pastes
+        - if (can_paste)
+          li(class=title=='paste'?'active':undefined).dropdown
+            a(href='#' data-toggle="dropdown").dropdown-toggle Paste
+              b.caret
+            ul.dropdown-menu
+              li 
+                a(href="/paste/new") Create New
+              - if (can_pasteAdmin)  
+                li
+                  a(href="/paste/admin") Admin Pastes
         if (can_chat)  
           li(class=title=='Chat Application - Chat Machine'?'active':undefined)
             a(href='/chat') Chat

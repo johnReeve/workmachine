@@ -228,5 +228,10 @@ function canDelete (user) {
  * Determine if the user can access a paste
  */
 exports.canAccess = function (req, res, next) {
-    next();
+    if(req.user && _.contains(req.user.roles, 'paste')) {
+        next();
+    } else {
+        req.flash('error', { msg: 'Sorry, that\'s not allowed .' });
+        res.redirect('/');
+    }
 }
