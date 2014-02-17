@@ -190,6 +190,11 @@ passport.use('foursquare', new OAuth2Strategy({
 
 exports.userRoles = [
   {key: 'chat', title: 'App - Chat'},
+  {key: 'paste', title: 'App - Paste'},
+  {key: 'paste-delete', title: 'App - Paste Delete'},
+  {key: 'paste-view-private', title: 'App - Paste View Private'},
+  {key: 'paste-view-unpublished', title: 'App - Paste View Unpublished'},
+  {key: 'admin-paste', title: 'Admin - Paste'},
   {key: 'admin', title: 'Admin - General'},
   {key: 'admin-user', title: 'Admin - Users'} 
 ];

@@ -25,6 +25,7 @@ var userController = require('./controllers/user');
 var apiController = require('./controllers/api');
 var contactController = require('./controllers/contact');
 var chatController = require('./controllers/chat');
+var pastebinController = require('./controllers/pastebin');
 
 /**
  * API keys + Passport configuration.
@@ -98,7 +99,20 @@ app.post('/signup', userController.postSignup);
 app.get('/contact', contactController.getContact);
 app.post('/contact', contactController.postContact);
 
+// todo: move this canChat thing to the chatController
 app.get('/chat', passportConf.canChat, chatController.getChatPage);
+
+app.get('/paste/new', pastebinController.canAccess, pastebinController.getNew);
+app.post('/paste/edit/new', pastebinController.canAccess, pastebinController.postEdit);
+app.get('/paste/edit/:id', pastebinController.canAccess, pastebinController.getEdit);
+app.post('/paste/edit/:id', pastebinController.canAccess, pastebinController.postEdit);
+app.get('/paste/edit', pastebinController.canAccess, pastebinController.getNew);
+app.get('/paste/delete', pastebinController.canAccess, pastebinController.getDeleteById);
+app.get('/paste/delete/:id', pastebinController.canAccess, pastebinController.getDeleteById);
+//app.get('/paste/user/:id', pastebinController.canAccess, pastebinController.getByUser);
+app.get('/paste/admin', pastebinController.canAccess, pastebinController.getAdmin);
+app.get('/paste/:id', pastebinController.getById);
+app.get('/paste', pastebinController.canAccess, pastebinController.getPublic);
 
 app.get('/account', passportConf.isAuthenticated, userController.getAccount);
 app.post('/account/profile', passportConf.isAuthenticated, userController.postUpdateProfile);
@@ -106,8 +120,6 @@ app.post('/account/password', passportConf.isAuthenticated, userController.postU
 app.post('/account/delete', passportConf.isAuthenticated, userController.postDeleteAccount);
 app.get('/account/unlink/:provider', passportConf.isAuthenticated, userController.getOauthUnlink);
 
-
-// TODO: Roles or better authentication
 app.get('/admin', passportConf.isAdmin, homeController.admin_main);
 app.get('/admin/users', passportConf.isAdmin, userController.getUserAdmin);
 app.get('/admin/users/create', passportConf.isAdmin, userController.getCreateUserAccount);
@@ -115,21 +127,6 @@ app.post('/admin/users/create', passportConf.isAdmin, userController.postCreateU
 app.post('/admin/users/delete', passportConf.isAdmin, userController.postDeleteUserAccount);
 app.get('/admin/users/:id', passportConf.isAdmin, userController.getUserProfile);
 app.post('/admin/users/:id', passportConf.isAdmin, userController.postUserProfile);
-
-
-app.get('/api', apiController.getApi);
-app.get('/api/foursquare', passportConf.isAuthenticated, passportConf.isAuthorized, apiController.getFoursquare);
-app.get('/api/tumblr', passportConf.isAuthenticated, passportConf.isAuthorized, apiController.getTumblr);
-app.get('/api/facebook', passportConf.isAuthenticated, apiController.getFacebook);
-app.get('/api/scraping', apiController.getScraping);
-app.get('/api/github', passportConf.isAuthenticated, passportConf.isAuthorized, apiController.getGithub);
-app.get('/api/lastfm', apiController.getLastfm);
-app.get('/api/nyt', apiController.getNewYorkTimes);
-app.get('/api/twitter', passportConf.isAuthenticated, apiController.getTwitter);
-app.get('/api/aviary', apiController.getAviary);
-app.get('/api/paypal', apiController.getPayPal);
-app.get('/api/paypal/success', apiController.getPayPalSuccess);
-app.get('/api/paypal/cancel', apiController.getPayPalCancel);
 
 app.get('/auth/facebook', passport.authenticate('facebook', { scope: 'email' }));
 app.get('/auth/facebook/callback', passport.authenticate('facebook', { successRedirect: '/', failureRedirect: '/login' }));

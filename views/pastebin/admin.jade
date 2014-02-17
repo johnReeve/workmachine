@@ -1,0 +1,33 @@
+extends ../layout
+
+block content
+    h1 Pastes 
+        a(href="/paste/new").btn.btn-primary Create New
+    - if (pastes)
+        table.table
+            for paste in pastes
+                .row
+                    .col-xs-3
+                        - if (paste.published == true)
+                            strong Published 
+                        - else
+                            strong Draft 
+                        - if (paste.public == true)
+                            strong Public 
+                        - else
+                            strong Private 
+                        br
+                        ul.list-inline
+                            li
+                                a(href='/paste/' + paste._id).btn.btn-xs.btn-info Link
+                            li
+                                a(href='/paste/delete/' + paste._id).btn.btn-xs.btn-danger 
+                                    .fa.fa-times  Delete
+                            li
+                                a(href='/paste/edit/' + paste._id).btn.btn-xs.btn-primary Edit
+                        hr
+                    .col-xs-9
+                        pre
+                            code #{paste.content}
+    - else
+        .warning No Pastes found

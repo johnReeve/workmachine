@@ -1,0 +1,44 @@
+extends ../layout
+
+block content
+    - var endpoint = (isNew !== true) ? paste._id : 'new';
+
+    #paste-edit
+        - if (isNew !== true)
+            h1 Edit Paste            
+        - else 
+            h1 New Paste
+        form(action='/paste/edit/#{endpoint}', method='POST')#paste-edit 
+            .row
+                #controls.col-xs-12
+                    ul.list-unstyled
+                        li
+                            ul.list-inline  
+                                li
+                                    button(value=submit).btn.btn-xs.btn-success
+                                        - if (isNew !== true)
+                                            .fa.fa-save  Save
+                                        - else
+                                            .fa.fa-save  Create
+                                - if (isNew !== true)
+                                    li
+                                        a(href='/paste/delete/#{paste._id}').btn.btn-xs.btn-danger
+                                            .fa.fa-times  Delete
+                                    li
+                                        a(href='/paste/#{paste._id}').btn.btn-xs.btn-info
+                                            .fa.fa-link  Link
+                        li
+                            label.radio-inline Public
+                                input(type='radio' name='public' checked=(paste.public == true) value='public') 
+                            label.radio-inline Private
+                                input(type='radio' name='public' checked=(paste.public != true) value='private') 
+                        li
+                            label.radio-inline Published
+                                input(type='radio' name='published' checked=(paste.published == true) value='published') 
+                            label.radio-inline Draft
+                                input(type='radio' name='published' checked=(paste.published != true) value='draft') 
+                    hr
+                    #paste-content.col-xs-12
+                        code
+                            textarea(name='pasteContent').col-xs-12 #{paste.content}
+

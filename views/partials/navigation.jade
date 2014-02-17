@@ -14,8 +14,16 @@
       ul.nav.navbar-nav
         li(class=title=='Home'?'active':undefined)
           a(href='/') Home
-        //li(class=title=='API Browser'?'active':undefined)
-          //a(href='/api') API Browser
+        li(class=title=='paste'?'active':undefined).dropdown
+          a(href='#' data-toggle="dropdown").dropdown-toggle Paste
+            b.caret
+          ul.dropdown-menu
+            li 
+              a(href="/paste/new") Create New
+            li
+              a(href="paste/user") View My Pastes
+            li
+              a(href="/paste/admin") Admin Pastes
         if (can_chat)  
           li(class=title=='Chat Application - Chat Machine'?'active':undefined)
             a(href='/chat') Chat

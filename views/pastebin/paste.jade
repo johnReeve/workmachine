@@ -1,0 +1,20 @@
+extends ../layout
+
+block content
+    - if (paste)
+        h1 Paste
+        ul.list-inline
+            -if (userCanEdit)
+                li
+                    a(href="/paste/edit/#{paste._id}").btn.btn-xs.btn-info Edit 
+            -if (userCanDelete)
+                li
+                    a(href="/paste/delete/#{paste._id}").btn.btn-xs.btn-danger
+                        .fa.fa-times  Delete 
+            li #{paste._id}
+
+        .row
+            pre.col-xs-12 
+                code #{paste.content}
+    - else
+        h1 Pasted Item Does not exist.
