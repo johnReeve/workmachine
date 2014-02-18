@@ -23,4 +23,6 @@ Thumbs.db
 /config/secrets.js
 /scripts/start.sh
 /scripts/upstart-work-machine
+/scripts/wsMongoBackup.sh
+
 /docs/InstallationSpecificDocs.txt
