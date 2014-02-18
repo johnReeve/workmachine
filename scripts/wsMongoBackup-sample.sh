@@ -80,6 +80,11 @@ DATE=$(date -u "+%F-%H%M%S")
 FILE_NAME="backup-$DATE"
 ARCHIVE_NAME="$FILE_NAME.tar.gz"
 
+# Mail:
+SUBJECT="[workmachine] S3 Backup Performed"
+EMAIL=
+EMAILMESSAGE = "A backup of $ARCHIVE_NAME has been performed."
+
 # Lock the database
 # Note there is a bug in mongo 2.2.0 where you must touch all the databases before you run mongodump
 if [[$MONGODB_USER ]]
@@ -126,3 +131,6 @@ curl -X PUT \
 --header "Authorization: AWS $AWS_ACCESS_KEY:$SIGNATURE" \
 --upload-file $DIR/backup/$ARCHIVE_NAME \
 https://$S3_BUCKET.s3.amazonaws.com/$ARCHIVE_NAME 
+
+# send an email using /bin/mail
+/bin/mail -s "$SUBJECT" "$EMAIL" < $EMAILMESSAGE
