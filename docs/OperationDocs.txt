@@ -49,6 +49,7 @@ I. Install
         db.addUser( { user: "wm_admin", pwd: "11databaser;;", roles: [ "userAdminAnyDatabase" ] } )
 
     Setup Database Backup
+        wsMongoBackup cron
 
 II. Deploy
 
@@ -57,6 +58,8 @@ II. Deploy
         >> git pull origin master
 
         update any additional config/secret.js settings
+
+        >> npm install --production 
 
         light a candle, spin the prayer wheels
 
