@@ -26,6 +26,8 @@ var apiController = require('./controllers/api');
 var contactController = require('./controllers/contact');
 var chatController = require('./controllers/chat');
 var pastebinController = require('./controllers/pastebin');
+var forgotController = require('./controllers/forgot');
+var resetController = require('./controllers/reset');
 
 /**
  * API keys + Passport configuration.
@@ -118,7 +120,10 @@ app.get('/account', passportConf.isAuthenticated, userController.getAccount);
 app.post('/account/profile', passportConf.isAuthenticated, userController.postUpdateProfile);
 app.post('/account/password', passportConf.isAuthenticated, userController.postUpdatePassword);
 app.post('/account/delete', passportConf.isAuthenticated, userController.postDeleteAccount);
-app.get('/account/unlink/:provider', passportConf.isAuthenticated, userController.getOauthUnlink);
+app.get('/account/forgot', forgotController.getForgot);
+app.post('/account/forgot', forgotController.postForgot);
+app.get('/account/reset/:token', resetController.getReset);
+app.post('/account/reset/:token', resetController.postReset);
 
 app.get('/admin', passportConf.isAdmin, homeController.admin_main);
 app.get('/admin/users', passportConf.isAdmin, userController.getUserAdmin);
@@ -128,6 +133,7 @@ app.post('/admin/users/delete', passportConf.isAdmin, userController.postDeleteU
 app.get('/admin/users/:id', passportConf.isAdmin, userController.getUserProfile);
 app.post('/admin/users/:id', passportConf.isAdmin, userController.postUserProfile);
 
+app.get('/account/unlink/:provider', passportConf.isAuthenticated, userController.getOauthUnlink);
 app.get('/auth/facebook', passport.authenticate('facebook', { scope: 'email' }));
 app.get('/auth/facebook/callback', passport.authenticate('facebook', { successRedirect: '/', failureRedirect: '/login' }));
 app.get('/auth/github', passport.authenticate('github'));
@@ -145,7 +151,7 @@ server.addListener('error', function(err) {
   console.log(err);
 });
 
-// Chat setup
+// Socket setup
 var sio = require('socket.io').listen(server);
 sio.configure(function (){
   sio.set('log level', 1);

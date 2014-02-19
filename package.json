@@ -1,6 +1,11 @@
 {
-  "name": "hackathon-starter",
-  "version": "0.0.0",
+  "name": "work-machine",
+  "version": "0.2.0",
+  "description": "Tools for remote working.",
+  "author": {
+    "name": "John Reeve",
+    "email": "john@johnrreeve.com"
+  },
   "dependencies": {
     "socket.io": "latest",
     "cookie": "latest",
@@ -32,6 +37,8 @@
     "twit": "~1.1.12",
     "underscore": "~1.5.2",
     "paypal-rest-sdk": "~0.6.4",
-    "connect-mongo": "~0.4.0"
+    "connect-mongo": "~0.4.0",
+    "crypto": "0.0.3",
+    "nodemailer": "~0.6.0"
   }
 }
