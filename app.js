@@ -161,5 +161,6 @@ sio.sockets.on('connection', chatController.socketOnConnection(sio) );
 
 server.listen(app.get('port'), function(){
   console.log('✔ : Express server listening on port ' + app.get('port'));
+  console.log(date = new Date(Date.now()));
 });
 
