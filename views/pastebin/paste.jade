@@ -1,9 +1,15 @@
 extends ../layout
 
+block pagescripts
+    script(src='//google-code-prettify.googlecode.com/svn/loader/run_prettify.js')
+
 block content
     - if (paste)
         h1 Paste
         ul.list-inline
+            li
+                button#copy-button(data-clipboard-target="pasteContent").btn.btn-xs.btn-info
+                    .fa.fa-clipboard  Copy To Clipboard
             -if (userCanEdit)
                 li
                     a(href="/paste/edit/#{paste._id}").btn.btn-xs.btn-info Edit 
@@ -14,7 +20,44 @@ block content
             li #{paste._id}
 
         .row
-            pre.col-xs-12 
-                code #{paste.content}
+            pre.col-xs-12.prettyprint
+                code#pasteContent #{paste.content}
     - else
         h1 Pasted Item Does not exist.
+    style.
+        .line-number {
+            position:absolute;
+            left: 10px;
+            text-align: right;
+        }
+        .line-number div {
+            padding-right:5px;
+            border-right:1px solid #999;
+        }
+        pre {
+            padding-left:30px!important;
+            line-height:1.9;
+        }
+    script(src='/js/lib/ZeroClipboard.min.js')    
+    script(type='text/javascript').
+        var pre = document.getElementsByTagName('pre'),
+        pl = pre.length;
+        for (var i = 0; i < pl; i++) {
+            pre[i].innerHTML = '<div class="line-number"></div>' + pre[i].innerHTML + '<div class="cl"></div>';
+            var num = pre[i].innerHTML.split(/\n/).length;
+            for (var j = 0; j < num; j++) {
+                var line_num = pre[i].getElementsByTagName('div')[0];
+                line_num.innerHTML += '<div>' + (j + 1) + '</div>';
+            }
+        }
+
+        var client = new ZeroClipboard( document.getElementById("copy-button"), {
+          moviePath: "/swf/ZeroClipboard.swf"
+        } );
+
+        client.on( "load", function(client) {
+          client.on( "complete", function(client, args) {
+            this.style.display = "none";
+            alert("Copied text to clipboard.");
+          } );
+        } );

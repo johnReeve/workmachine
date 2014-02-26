@@ -17,17 +17,17 @@
 // Brand colors
 // -------------------------
 
-@brand-primary:         #2C3E50;
-@brand-success:         #18BC9C;
-@brand-warning:         #F39C12;
-@brand-danger:          #E74C3C;
-@brand-info:            #3498DB;
+@brand-primary:         #69b26c;
+@brand-success:         #6999b2;
+@brand-warning:         #e0d04a;
+@brand-danger:          #ff4a4a;
+@brand-info:            #3b99cc;
 
 // Scaffolding
 // -------------------------
 
 @body-bg:               #fff;
-@text-color:            @brand-primary;
+@text-color:            @gray-dark;
 
 // Links
 // -------------------------
@@ -38,10 +38,11 @@
 // Typography
 // -------------------------
 
-@font-family-sans-serif:  "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+@font-family-sans-serif:  "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
 @font-family-serif:       Georgia, "Times New Roman", Times, serif;
 @font-family-monospace:   Menlo, Monaco, Consolas, "Courier New", monospace;
 @font-family-base:        @font-family-sans-serif;
+@font-family-fancy:       'Schoolbell', cursive;
 
 @font-size-base:          15px;
 @font-size-large:         ceil(@font-size-base * 1.25); // ~18px
@@ -57,10 +58,10 @@
 @line-height-base:        1.428571429; // 20/14
 @line-height-computed:    floor(@font-size-base * @line-height-base); // ~20px
 
-@headings-font-family:    @font-family-base;
+@headings-font-family:    @font-family-fancy;
 @headings-font-weight:    500;
 @headings-line-height:    1.1;
-@headings-color:          inherit;
+@headings-color:          @brand-primary;
 
 
 // Iconography
@@ -271,7 +272,7 @@
 
 // Navbar links
 @navbar-default-link-color:                #fff;
-@navbar-default-link-hover-color:          @brand-success;
+@navbar-default-link-hover-color:          darken(#fff, 6.5%);
 @navbar-default-link-hover-bg:             transparent;
 @navbar-default-link-active-color:         #fff;
 @navbar-default-link-active-bg:            darken(@navbar-default-bg, 10%);

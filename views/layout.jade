@@ -9,10 +9,11 @@ html
 
     title #{title} - Work Machine
 
+    link(href='//fonts.googleapis.com/css?family=Schoolbell|Roboto:400,700,300', rel='stylesheet' type='text/css')
     link(href='/css/lib/font-awesome.min.css?v=#{cacheBuster}', rel='stylesheet')
     link(href='/css/lib/animate.css?v=#{cacheBuster}', rel='stylesheet')
-
     link(href='/css/styles.css?v=#{cacheBuster}', rel='stylesheet')
+    block pagestyles
 
     script(src='/js/lib/jquery.js?v=#{cacheBuster}')
     script(src='/js/lib/bootstrap.js?v=#{cacheBuster}')
