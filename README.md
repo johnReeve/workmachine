@@ -2,8 +2,8 @@
 
 This is a nodejs application that I was working with to:
 
-1) try and learn nodejs
-1) try and make it easier to work with other folks.
+- try and learn nodejs
+- try and make it easier to work with other folks.
 
 IIRC, it has a user login system, a paste-bin clone, and a simple chat application.  I had intended to add a todo /issue  tracker, but haven't had time.
 
